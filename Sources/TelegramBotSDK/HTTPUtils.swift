@@ -47,6 +47,7 @@ public class HTTPUtils {
             
             var valueString: String
             
+            
             if let boolValue = value as? Bool {
                 if !boolValue {
                     continue
@@ -56,6 +57,8 @@ public class HTTPUtils {
             } else if value is String {
                 
                 valueString = value as! String
+            } else if let value = (value as? FileInfo), case .string(let str) = value {
+                valueString = str
             } else {
                 let encodableBox = AnyEncodable(value: value)
                 let encoder = JSONEncoder()

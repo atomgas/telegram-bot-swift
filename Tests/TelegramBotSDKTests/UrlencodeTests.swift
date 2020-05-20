@@ -69,6 +69,17 @@ class UrlencodeTests: XCTestCase {
         XCTAssert(encoded.contains("key1=value1") && encoded.contains("key2=123") && !encoded.contains("key3"))
     }
     
+    func testFormUrlencodeFileInfo() {
+        let gifUrl = FileInfo.string("https://media.giphy.com/media/7xkxbhryQO7hm/giphy.gif")
+        let parameters: [String: Encodable?] = [
+            "key1": "value1",
+            "key2": 123,
+            "animation": gifUrl
+        ]
+        let encoded = HTTPUtils.formUrlencode(parameters)
+        XCTAssert(encoded.contains("key1=value1") && encoded.contains("key2=123") && encoded.contains("animation=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2F7xkxbhryQO7hm%2Fgiphy.gif"))
+    }
+    
     func testFormUrlencodeNilValue() {
         let parameters: [String: Encodable?] = [
             "key": nil
